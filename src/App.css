@@ -1,4 +1,4 @@
-body {
+.body {
   background-color: #f0f8ff; 
   font-family: 'Comic Sans MS', cursive, sans-serif;
   text-align: center;
@@ -60,7 +60,7 @@ main {
   border-radius: 10px;
 }
 
-input[type="text"] {
+.input[type="text"] {
   padding: 10px;
   font-size: 1.2em;
   width: 250px;
@@ -69,7 +69,7 @@ input[type="text"] {
   border-radius: 5px;
 }
 
-button {
+.button {
   padding: 10px 20px;
   font-size: 1.2em;
   cursor: pointer;

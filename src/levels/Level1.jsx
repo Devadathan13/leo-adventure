@@ -60,11 +60,11 @@ function Level1({ onComplete }) {
           <Card className="puzzle-box">
             <Card.Header as="h5">Click the parts of the story in the correct order:</Card.Header>
 
-            <h3>Your Clue</h3>
+            <h3 className='mt-4'>Your Clue</h3>
             <ListGroup.Item >{puzzle.prompt}</ListGroup.Item>
 
             <Card.Body>
-              <div className="d-flex flex-wrap justify-content-center gap-2 mb-3 mt-3">
+              <div className="d-flex flex-wrap justify-content-center gap-2 mb-3 mt-1">
                 {puzzle.parts.map((part, index) => (
                   <Button
                     key={index}
