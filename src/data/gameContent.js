@@ -4,9 +4,9 @@ export const gameContent = {
     character: "Ollie the Owl",
     story: "Ollie the Owl loves stories but forgets how they go! Help him put the story in the right order.",
     puzzle: {
-      prompt: "A bunny found a carrot.",
-      parts: ["The bunny ate the carrot.", "The bunny was hungry.", "He searched for food."],
-      correctOrder: ["The bunny was hungry.", "He searched for food.", "A bunny found a carrot.", "The bunny ate the carrot."]
+      prompt: "The bunny was hungry.",
+      parts: ["The bunny ate the carrot.", "The bunny found a carrot.", "He searched for food."],
+      correctOrder: ["The bunny was hungry.", "He searched for food.", "The bunny found a carrot.", "The bunny ate the carrot."]
     }
   },
   level2: {

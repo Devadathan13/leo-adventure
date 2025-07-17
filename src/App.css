@@ -1,12 +1,12 @@
 body {
-  background-color: #f0f8ff; /* Light blue sky */
+  background-color: #f0f8ff; 
   font-family: 'Comic Sans MS', cursive, sans-serif;
   text-align: center;
   color: #333;
 }
 
-.App-header {
-  background-color: #4CAF50; /* Grassy green */
+ .App-header {
+  background-color: #4CAF50; 
   padding: 20px;
   color: white;
   border-bottom: 5px solid #388E3C;
@@ -26,7 +26,7 @@ main {
 }
 
 .start-button {
-  background-color: #ff9800; /* Sunny orange */
+  background-color: #ff9800; 
   color: white;
   border: none;
   padding: 15px 30px;
@@ -46,7 +46,7 @@ main {
   max-width: 600px;
   margin: auto;
   padding: 20px;
-  background: #fff8e1; /* Creamy paper */
+  background: #fff8e1; 
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
@@ -83,7 +83,7 @@ button {
   margin-top: 20px;
   font-size: 1.2em;
   font-weight: bold;
-  color: #d32f2f; /* Red for wrong, you can change this dynamically */
+  color: #d32f2f; 
 }
 
 .feedback:first-letter {
