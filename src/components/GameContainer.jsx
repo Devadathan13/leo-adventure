@@ -6,22 +6,28 @@ import Level2 from '../levels/Level2';
 import Level3 from '../levels/Level3';
 import Level4 from '../levels/Level4';
 import Level5 from '../levels/Level5';
+import intro_video from '../assets/intro.mp4'
+import video1 from '../assets/video_lvl2.mp4'
+import video2 from '../assets/video_lvl3.mp4'
+import video3 from '../assets/video_lvl4.mp4'
+import video4 from '../assets/video_lvl5.mp4'
+import video5 from '../assets/video_final.mp4'
 
 const levelComponents = { 1: Level1, 2: Level2, 3: Level3, 4: Level4, 5: Level5 };
 
 // You can have a different video for each level transition
 const transitionVideos = {
-  1: '../src/assets/video_lvl2.mp4',
-  2: '../src/assets/video_lvl3.mp4',
-  3: '../src/assets/video_lvl4.mp4',
-  4: '../src/assets/video_lvl5.mp4',
-  5: '../src/assets/video_final.mp4',
+  1: video1,
+  2: video2,
+  3: video3,
+  4: video4,
+  5: video5,
 };
 
 
 
 // Video for the game introduction
-const introVideo = "../src/assets/video_intro.mp4";
+const introVideo = intro_video;
 
 
 

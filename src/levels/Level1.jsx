@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { gameContent } from '../data/gameContent';
 import backgroundImage from '../assets/background_level1.png';
 import { Container, Row, Col, Button, Alert, Image } from 'react-bootstrap';
+import rabbit_image from '../assets/level_1.png'
 
 function Level1({ onComplete }) {
   const levelData = gameContent.level1;
@@ -55,7 +56,7 @@ function Level1({ onComplete }) {
           <Col>
             <h2 className="fw-bold">{title}</h2>
             <p>{story}</p>
-            <Image src={"../src/assets/level_1.png"} fluid rounded />
+            <Image src={rabbit_image} fluid rounded />
           </Col>
         </Row>
 
