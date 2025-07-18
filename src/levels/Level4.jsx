@@ -1,33 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gameContent } from '../data/gameContent';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
 import backgroundImage from '../assets/background_level1.png';
 
 function Level4({ onComplete }) {
   const levelData = gameContent.level4;
   const [currentPairIndex, setCurrentPairIndex] = useState(0);
-  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState([]);
   const [feedback, setFeedback] = useState('');
 
   const currentPair = levelData.pairs[currentPairIndex];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const allWords = levelData.pairs.map(pair => pair.rhyme);
 
-    if (inputValue.toUpperCase() === currentPair.rhyme) {
-      setFeedback('That’s a rhyme!');
+  useEffect(() => {
+    generateOptions();
+  }, [currentPairIndex]);
+
+  const generateOptions = () => {
+    const correct = currentPair.rhyme;
+    let tempOptions = new Set([correct]);
+
+    while (tempOptions.size < 3) {
+      const randomWord = allWords[Math.floor(Math.random() * allWords.length)];
+      if (randomWord !== correct) tempOptions.add(randomWord);
+    }
+
+    const shuffled = Array.from(tempOptions).sort(() => 0.5 - Math.random());
+    setOptions(shuffled);
+  };
+
+  const handleOptionClick = (selected) => {
+    if (selected === currentPair.rhyme) {
+      setFeedback("That’s a rhyme!");
       setTimeout(() => {
         const nextIndex = currentPairIndex + 1;
         if (nextIndex < levelData.pairs.length) {
           setCurrentPairIndex(nextIndex);
-          setInputValue('');
           setFeedback('');
         } else {
           onComplete();
         }
-      }, 1000);
+      }, 500);
     } else {
-      setFeedback('Try again!');
+      setFeedback("Try again!");
     }
   };
 
@@ -60,32 +76,29 @@ function Level4({ onComplete }) {
               <h3 className="mb-3 text-center">{levelData.title}</h3>
               <p className="text-center">{levelData.story}</p>
 
-              <div className="text-center mb-4">
+              {/* <div className="text-center mb-4">
                 <p className="fw-bold">{levelData.character}</p>
-              </div>
+              </div> */}
 
               <div className="text-center mb-3">
                 <p className="mb-2 fw-bold">Find a word that rhymes with:</p>
                 <h2>{currentPair.word}</h2>
               </div>
 
-              <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Type a rhyming word"
-                    autoFocus
-                  />
-                </Form.Group>
-
-                <div className="d-grid">
-                  <Button type="submit" variant="success">
-                    Submit
+              <div className="d-flex justify-content-center gap-2 flex-wrap">
+                {options.map((option, index) => (
+                  <Button
+                    key={index}
+                    variant="warning"
+                    onClick={() => handleOptionClick(option)}
+                    style={{
+                      width: '150px',
+                    }}
+                  >
+                    {option}
                   </Button>
-                </div>
-              </Form>
+                ))}
+              </div>
 
               {feedback && (
                 <Alert

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { gameContent } from '../data/gameContent';
 import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
-import backgroundImage from '../assets/background_level1.png';
+import backgroundImage from '../assets/background_level5.png';
 
 function Level5({ onComplete }) {
   const levelData = gameContent.level5;
@@ -31,7 +31,7 @@ function Level5({ onComplete }) {
         } else {
           onComplete();
         }
-      }, 1000);
+      }, 500);
     } else {
       setFeedback('That’s not correct. Try again!');
       setSelectedWords([]);
@@ -67,9 +67,9 @@ function Level5({ onComplete }) {
               <h3 className="mb-3 text-center">{levelData.title}</h3>
               <p className="text-center">{levelData.story}</p>
 
-              <div className="text-center mb-3">
+              {/* <div className="text-center mb-3">
                 <p className="fw-bold">{levelData.character}</p>
-              </div>
+              </div> */}
 
               <p className="fw-bold mb-2 text-center">Click the words in the correct order:</p>
 

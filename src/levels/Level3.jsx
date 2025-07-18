@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { gameContent } from '../data/gameContent';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import backgroundImage from '../assets/background_level1.png';
+import backgroundImage from '../assets/background_level3.png';
 
 function Level3({ onComplete }) {
   const levelData = gameContent.level3;
@@ -23,7 +23,7 @@ function Level3({ onComplete }) {
         } else {
           onComplete();
         }
-      }, 1000);
+      }, 500);
     } else {
       setFeedback('Try again!');
     }
@@ -58,9 +58,9 @@ function Level3({ onComplete }) {
               <h3 className="mb-3 text-center">{levelData.title}</h3>
               <p className="text-center">{levelData.story}</p>
 
-              <div className="text-center mb-4">
+              {/* <div className="text-center mb-4">
                 <p className="fw-bold">{levelData.character}</p>
-              </div>
+              </div> */}
 
               <div className="text-center mb-3">
                 <p className="mb-2 fw-bold">Fill in the missing letters:</p>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { gameContent } from '../data/gameContent';
-import backgroundImage from '../assets/background_level1.png';
+import backgroundImage from '../assets/background_level2.png';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 
 // Helper function to scramble a word
@@ -30,7 +30,7 @@ function Level2({ onComplete }) {
         } else {
           onComplete();
         }
-      }, 1500);
+      }, 500);
     } else {
       setFeedback('Not quite, try again!');
       setInputValue('');

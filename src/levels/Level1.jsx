@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { gameContent } from '../data/gameContent';
 import backgroundImage from '../assets/background_level1.png';
-import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button, Alert, Image } from 'react-bootstrap';
 
 function Level1({ onComplete }) {
   const levelData = gameContent.level1;
@@ -22,7 +22,7 @@ function Level1({ onComplete }) {
 
     setFeedback(isCorrect ? 'Correct order! Well done!' : 'That’s not quite right. Try again!');
     if (isCorrect) {
-      setTimeout(onComplete, 1500);
+      setTimeout(onComplete, 500);
     } else {
       setSelectedOrder([]);
     }
@@ -55,7 +55,7 @@ function Level1({ onComplete }) {
           <Col>
             <h2 className="fw-bold">{title}</h2>
             <p>{story}</p>
-            <h4 className="text-dark">{character}</h4>
+            <Image src={"../src/assets/level_1.png"} fluid rounded />
           </Col>
         </Row>
 
