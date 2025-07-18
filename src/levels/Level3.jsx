@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { gameContent } from '../data/gameContent';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import backgroundImage from '../assets/background_level1.png';
 
 function Level3({ onComplete }) {
   const levelData = gameContent.level3;
@@ -12,10 +13,8 @@ function Level3({ onComplete }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (inputValue.toUpperCase() === currentWordData.word.toUpperCase()) { // Ensure case-insensitive comparison
+    if (inputValue.toUpperCase() === currentWordData.word) {
       setFeedback('Correct!');
-
       setTimeout(() => {
         if (wordIndex + 1 < levelData.words.length) {
           setWordIndex(wordIndex + 1);
@@ -31,31 +30,42 @@ function Level3({ onComplete }) {
   };
 
   return (
-    <Container className="level-container my-4">
-      <Row className="mb-4 text-center">
-        <Col>
-          <h2>{levelData.title}</h2>
-          <p className="lead">{levelData.story}</p>
-        </Col>
-      </Row>
+    <div
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '20px',
+      }}
+    >
+      <Container>
+        <Row className="justify-content-center">
+          <Col md={8} lg={6}>
+            <div
+              className="p-4 rounded"
+              style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                backdropFilter: 'blur(8px)',
+                color: 'black',
+                borderRadius: '20px',
+                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.4)',
+              }}
+            >
+              <h3 className="mb-3 text-center">{levelData.title}</h3>
+              <p className="text-center">{levelData.story}</p>
 
-      <Row className="mb-4 justify-content-center">
-        <Col xs={12} md={8} lg={6}>
-          <Card className="text-center">
-            <Card.Body>
-              {/* You can add an image here using <Card.Img variant="top" src="/images/your-character.png" alt={levelData.character} /> */}
-              <Card.Text className="h4">{levelData.character}</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+              <div className="text-center mb-4">
+                <p className="fw-bold">{levelData.character}</p>
+              </div>
 
-      <Row className="justify-content-center">
-        <Col xs={12} md={8} lg={6}>
-          <Card className="missing-letter-box text-center p-4">
-            {/* <Card.Header as="h5">Fill in the missing letters:</Card.Header> */}
-            <Card.Body>
-              <h6 className="mb-4 display-6 text-primary ">{currentWordData.gap}</h6>
+              <div className="text-center mb-3">
+                <p className="mb-2 fw-bold">Fill in the missing letters:</p>
+                <h2>{currentWordData.gap}</h2>
+              </div>
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
@@ -65,29 +75,31 @@ function Level3({ onComplete }) {
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Complete the word"
                     autoFocus
-                    size="lg"
-                    className="text-center"
                   />
                 </Form.Group>
-                <Button type="submit" variant="success" size="lg">
-                  Submit
-                </Button>
+
+                <div className="d-grid">
+                  <Button type="submit" variant="success">
+                    Submit
+                  </Button>
+                </div>
               </Form>
 
               {feedback && (
                 <Alert
-                  variant={feedback.includes('Correct') ? 'success' : 'danger'}
-                  className="mt-4"
+                  variant={feedback === 'Correct!' ? 'success' : 'danger'}
+                  className="mt-3 text-center"
                 >
                   {feedback}
                 </Alert>
               )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
 
 export default Level3;
+

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { gameContent } from '../data/gameContent';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import backgroundImage from '../assets/background_level1.png';
+import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 
 // Helper function to scramble a word
-const scrambleWord = (word) => {
-  if (!word) return ''; // Handle cases where word might be undefined or null
-  return word.split('').sort(() => 0.5 - Math.random()).join('');
-};
+const scrambleWord = (word) => word.split('').sort(() => 0.5 - Math.random()).join('');
 
 function Level2({ onComplete }) {
   const levelData = gameContent.level2;
@@ -15,11 +13,6 @@ function Level2({ onComplete }) {
   const [scrambled, setScrambled] = useState(scrambleWord(levelData.words[0]));
   const [inputValue, setInputValue] = useState('');
   const [feedback, setFeedback] = useState('');
-
-  // Effect to update scrambled word when currentWord changes
-  useEffect(() => {
-    setScrambled(scrambleWord(currentWord));
-  }, [currentWord]);
 
   const handleGuess = (e) => {
     e.preventDefault();
@@ -30,11 +23,12 @@ function Level2({ onComplete }) {
         if (nextIndex < levelData.words.length) {
           setWordIndex(nextIndex);
           const nextWord = levelData.words[nextIndex];
-          setCurrentWord(nextWord); // This will trigger the useEffect to scramble
+          setCurrentWord(nextWord);
+          setScrambled(scrambleWord(nextWord));
           setInputValue('');
           setFeedback('');
         } else {
-          onComplete(); // Call the function to navigate to the next level
+          onComplete();
         }
       }, 1500);
     } else {
@@ -44,34 +38,37 @@ function Level2({ onComplete }) {
   };
 
   return (
-    <Container className="level-container my-4">
-      <Row className="mb-4 text-center">
-        <Col>
-          <h1>{levelData.title}</h1>
-          <p className="lead">{levelData.story}</p>
-        </Col>
-      </Row>
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        padding: '20px',
+      }}
+    >
+      <Container
+        className="p-4 rounded"
+        style={{
+          background: 'rgba(255, 255, 255, 0.15)',
+          backdropFilter: 'blur(8px)',
+          color: 'black',
+          maxWidth: '800px',
+          width: '100%',
+          boxShadow: '0 8px 20px rgba(0, 0, 0, 0.4)',
+        }}
+      >
+        <Row className="text-center mb-3">
+          <Col>
+            <h2>{levelData.title}</h2>
+            <p>{levelData.story}</p>
+            <h4 className="my-3">{scrambled}</h4>
+          </Col>
+        </Row>
 
-      <Row className="mb-4 justify-content-center">
-        <Col xs={12} md={8} lg={6}>
-          <Card className="text-center">
-            <Card.Body>
-              {/* <Card.Img variant="top" src="/images/wiggle-worm.png" alt="Wiggle the Word Worm" className="mb-3" style={{ maxWidth: '150px' }}/> */}
-              <Card.Text>
-                {<span className='display-7'>{levelData.character}</span> || "Your character goes here!"}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="justify-content-center">
-        <Col xs={12} md={8} lg={6}>
-          <Card className="text-center p-4">
-            <Card.Title as="h2" className="mb-4">
-              <span className="badge bg-info text-dark p-3">{scrambled}</span>
-            </Card.Title>
-
+        <Row className="justify-content-center">
+          <Col md={8}>
             <Form onSubmit={handleGuess}>
               <Form.Group className="mb-3">
                 <Form.Control
@@ -80,11 +77,10 @@ function Level2({ onComplete }) {
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Unscramble the word"
                   autoFocus
-                  size="lg"
-                  className="text-center"
                 />
               </Form.Group>
-              <Button type="submit" variant="primary" size="lg">
+
+              <Button variant="warning" type="submit" className="w-100">
                 Check
               </Button>
             </Form>
@@ -92,15 +88,15 @@ function Level2({ onComplete }) {
             {feedback && (
               <Alert
                 variant={feedback.includes('Correct') ? 'success' : 'danger'}
-                className="mt-4"
+                className="text-center mt-3"
               >
                 {feedback}
               </Alert>
             )}
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
 

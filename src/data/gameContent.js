@@ -5,15 +5,15 @@ export const gameContent = {
     story: "Ollie the Owl loves stories but forgets how they go! Help him put the story in the right order.",
     puzzle: {
       prompt: "The bunny was hungry.",
-      parts: ["He bunny ate the carrot.", "He bunny found a carrot.", "He searched for food."],
-      correctOrder: ["The bunny was hungry.", "He searched for food.", "He bunny found a carrot.", "He bunny ate the carrot."]
+      parts: ["The bunny ate the carrot.", "The bunny found a carrot.", "He searched for food."],
+      correctOrder: ["The bunny was hungry.", "He searched for food.", "The bunny found a carrot.", "The bunny ate the carrot."]
     }
   },
   level2: {
     title: "The Word Swamp",
-    character: "Wiggle the Word",
+    character: "Wiggle the Word Worm",
     story: "Wiggle the Word Worm has mixed up all the words! Help Leo unscramble them.",
-    words: ["OSTRICH", "ZEBRA", "MONKEY"]
+    words: ["ZEBRA", "LION", "MONKEY"]
   },
   level3: {
     title: "The Cave of Echoes",
