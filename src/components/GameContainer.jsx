@@ -1,129 +1,109 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
+import YouTube from 'react-youtube';
 import Level1 from '../levels/Level1';
 import Level2 from '../levels/Level2';
 import Level3 from '../levels/Level3';
 import Level4 from '../levels/Level4';
 import Level5 from '../levels/Level5';
-import intro_video from '../assets/intro.mp4'
-import video1 from '../assets/video_lvl2.mp4'
-import video2 from '../assets/video_lvl3.mp4'
-import video3 from '../assets/video_lvl4.mp4'
-import video4 from '../assets/video_lvl5.mp4'
-import video5 from '../assets/video_final.mp4'
 
 const levelComponents = { 1: Level1, 2: Level2, 3: Level3, 4: Level4, 5: Level5 };
+const FINAL_LEVEL = 5;
+const FIRST_LEVEL = 1;
 
-// You can have a different video for each level transition
-const transitionVideos = {
-  1: video1,
-  2: video2,
-  3: video3,
-  4: video4,
-  5: video5,
+const introVideoId = 'nEB2-qB6ge8';    // Video before Level 1
+const outroVideoId = 'Mjs7BoVr6Zs';    // Video after Level 5
+
+const transitionVideoIds = {
+  1: '0uWvEF4nevI', // After level 1
+  2: '-toatmb9S7c', // After level 2
+  3: 'TwETfWMA1qc', // After level 3
+  4: 'qbGMuuxrK2I', // After level 4
 };
-
-
-
-// Video for the game introduction
-const introVideo = intro_video;
-
-
 
 function GameContainer() {
   const { levelId } = useParams();
   const navigate = useNavigate();
   const currentLevel = parseInt(levelId, 10);
 
-  // State for the transition video modal
-  const [showVideoModal, setShowVideoModal] = useState(false);
-  // State for the intro video modal
-  const [showIntroModal, setShowIntroModal] = useState(false);
-  // State to track if the intro has finished playing
+  // --- Consolidated State Management ---
+  const [videoToPlayId, setVideoToPlayId] = useState(null);
   const [introPlayed, setIntroPlayed] = useState(false);
 
-  // useEffect to show the intro video before level 1 starts
+  // Effect to trigger the intro video
   useEffect(() => {
-    // Only show the intro if it's level 1 and the intro hasn't been played yet
-    if (currentLevel === 1 && !introPlayed) {
-      setShowIntroModal(true);
+    if (currentLevel === FIRST_LEVEL && !introPlayed) {
+      setVideoToPlayId(introVideoId);
     }
   }, [currentLevel, introPlayed]);
 
-
+  // Called when a level is completed
   const handleLevelComplete = () => {
-    // Show the transition video modal
-    setShowVideoModal(true);
-  };
-
-  const handleTransitionVideoEnd = () => {
-    setShowVideoModal(false); // Hide the modal
-    const nextLevel = currentLevel + 1;
-    if (nextLevel > 5) {
-      navigate('/congratulations');
+    if (currentLevel === FINAL_LEVEL) {
+      setVideoToPlayId(outroVideoId);
     } else {
-      navigate(`/level/${nextLevel}`);
+      setVideoToPlayId(transitionVideoIds[currentLevel]);
     }
   };
 
-  const handleIntroEnd = () => {
-    setShowIntroModal(false); // Hide intro modal
-    setIntroPlayed(true);     // Mark intro as played
+  // A single handler for when any video ends
+  const handleVideoEnd = () => {
+    const wasIntro = videoToPlayId === introVideoId;
+    setVideoToPlayId(null); // Hide the modal
+
+    if (wasIntro) {
+      setIntroPlayed(true); // Mark intro as played and stay on Level 1
+    } else {
+      // It was a transition or outro, so navigate
+      const nextLevel = currentLevel + 1;
+      if (currentLevel >= FINAL_LEVEL) {
+        navigate('/congratulations');
+      } else {
+        navigate(`/level/${nextLevel}`);
+      }
+    }
   };
 
   const CurrentLevelComponent = levelComponents[currentLevel];
+  // Don't render the level while the intro is playing
+  const shouldRenderLevel = CurrentLevelComponent && (videoToPlayId !== introVideoId);
 
-  if (!CurrentLevelComponent) {
-    return <div>Level not found! Go <a href="/">Home</a></div>;
-  }
-
-  // We only render the level component if the intro is not supposed to be playing.
-  const shouldRenderLevel = !showIntroModal;
+  // Options for the YouTube player
+  const playerOptions = {
+    height: '100%',
+    width: '100%',
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+      rel: 0,
+      modestbranding: 1,
+    },
+  };
 
   return (
     <>
       {shouldRenderLevel && <CurrentLevelComponent onComplete={handleLevelComplete} />}
 
-      {/* Modal for the Intro Video */}
-      <Modal
-        show={showIntroModal}
-        fullscreen={true}
-        onHide={handleIntroEnd} // Optional: allow user to skip intro
-        centered
-      >
-        <Modal.Body className="p-0 bg-black text-center">
-          <video
-            width="100%"
-            height="100%"
-            autoPlay
-            onEnded={handleIntroEnd}
-            style={{ objectFit: 'contain' }}
-          >
-            <source src={introVideo} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </Modal.Body>
-      </Modal>
+      {!CurrentLevelComponent && (
+        <div>Level not found! Go <a href="/">Home</a></div>
+      )}
 
-      {/* Modal for the Level Transition Videos */}
+      {/* A single, unified modal for all videos */}
       <Modal
-        show={showVideoModal}
+        show={!!videoToPlayId}
         fullscreen={true}
-        onHide={() => setShowVideoModal(false)}
         centered
       >
         <Modal.Body className="p-0 bg-black text-center">
-          <video
-            width="100%"
-            height="100%"
-            autoPlay
-            onEnded={handleTransitionVideoEnd}
-            style={{ objectFit: 'contain' }}
-          >
-            <source src={transitionVideos[currentLevel]} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          {videoToPlayId && (
+            <YouTube
+              videoId={videoToPlayId}
+              opts={playerOptions}
+              onEnd={handleVideoEnd}
+              className="w-100 h-100"
+            />
+          )}
         </Modal.Body>
       </Modal>
     </>
