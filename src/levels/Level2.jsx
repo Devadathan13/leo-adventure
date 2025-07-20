@@ -4,7 +4,7 @@ import backgroundImage from '../assets/background_level2.png';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 
 // Helper function to scramble a word
-const scrambleWord = (word) => word.split('').sort(() => 0.5 - Math.random()).join('');
+const scrambleWord = (word) => word.split('').sort(() => 0.3 - Math.random()).join('');
 
 function Level2({ onComplete }) {
   const levelData = gameContent.level2;

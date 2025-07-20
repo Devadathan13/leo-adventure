@@ -10,7 +10,7 @@ function Level5({ onComplete }) {
   const [feedback, setFeedback] = useState('');
 
   const currentSentence = levelData.sentences[sentenceIndex];
-  const shuffledWords = [...currentSentence].sort(() => 0.5 - Math.random());
+  const shuffledWords = [...currentSentence].sort(() => 0.3 - Math.random());
 
   const handleWordClick = (word) => {
     if (!selectedWords.includes(word)) {

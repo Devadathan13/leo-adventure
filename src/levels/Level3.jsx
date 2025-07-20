@@ -63,7 +63,7 @@ function Level3({ onComplete }) {
               </div> */}
 
               <div className="text-center mb-3">
-                <p className="mb-2 fw-bold">Fill in the missing letters:</p>
+                <p className="mb-2 fw-bold">Enter the word with missing letters:</p>
                 <h2>{currentWordData.gap}</h2>
               </div>
 
@@ -73,7 +73,7 @@ function Level3({ onComplete }) {
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Complete the word"
+                    placeholder="Enter the completed word"
                     autoFocus
                   />
                 </Form.Group>

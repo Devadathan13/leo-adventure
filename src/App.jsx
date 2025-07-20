@@ -5,7 +5,10 @@ import GameContainer from './components/GameContainer';
 import EndPage from './pages/EndPage';
 
 
+
+
 function App() {
+
   return (
     <Router>
       <div className="App">  
@@ -22,8 +25,10 @@ function App() {
             <Route path="/congratulations" element={<EndPage />} />
           </Routes>
         </main>
+        
       </div>
     </Router>
+    
   );
 }
 
